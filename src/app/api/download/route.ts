@@ -26,6 +26,17 @@ export async function POST(req: Request) {
       fs.createWriteStream(`public/audio/${title}.mp3`)
     );
 
+    console.log(`${title}.mp3 has been created`)
+
+    const deleteFile = () => {
+      setTimeout(() => {
+        fs.unlinkSync(`public/audio/${title}.mp3`);
+      }, 5 * 60 * 1000);
+      console.log(`${title}.mp3 has been deleted`)
+    };
+
+    deleteFile();
+
     return NextResponse.json(
       { url: `${host}/api/download/${encodeURI(title)}` },
       { status: 200 }
