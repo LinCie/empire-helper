@@ -13,9 +13,7 @@ export default function Home() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await axios.get("/api/download", {
-      params: { url: url, title: title },
-    });
+    const response = await axios.post("/api/download", { url, title });
 
     setDownloadUrl(response.data.url);
   };

@@ -3,13 +3,14 @@ import { headers } from "next/headers";
 import ytdl from "ytdl-core";
 import fs from "fs";
 
-export async function GET(req: Request) {
-  try {
-    const requestUrl = new URL(req.url);
-    const params = requestUrl.searchParams;
+interface PostRequestBody {
+  url: string | null;
+  title: string | null;
+}
 
-    const url = params.get("url");
-    const title = params.get("title");
+export async function POST(req: Request) {
+  try {
+    const { url, title }: PostRequestBody = await req.json();
 
     const heads = headers();
 
