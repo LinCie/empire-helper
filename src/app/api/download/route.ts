@@ -31,8 +31,8 @@ export async function POST(req: Request) {
     const deleteFile = () => {
       setTimeout(() => {
         fs.unlinkSync(`public/audio/${title}.mp3`);
+        console.log(`${title}.mp3 has been deleted`)
       }, 5 * 60 * 1000);
-      console.log(`${title}.mp3 has been deleted`)
     };
 
     deleteFile();
