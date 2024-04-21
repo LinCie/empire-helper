@@ -3,14 +3,13 @@ import { headers } from "next/headers";
 import ytdl from "ytdl-core";
 import fs from "fs";
 
-interface PostRequestBody {
-  url: string | null;
-  title: string | null;
-}
-
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
-    const { url, title }: PostRequestBody = await req.json();
+    const requestUrl = new URL(req.url);
+    const params = requestUrl.searchParams;
+
+    const url = params.get("url");
+    const title = params.get("title");
 
     const heads = headers();
 
@@ -26,12 +25,12 @@ export async function POST(req: Request) {
       fs.createWriteStream(`public/audio/${title}.mp3`)
     );
 
-    console.log(`${title}.mp3 has been created`)
+    console.log(`${title}.mp3 has been created`);
 
     const deleteFile = () => {
       setTimeout(() => {
         fs.unlinkSync(`public/audio/${title}.mp3`);
-        console.log(`${title}.mp3 has been deleted`)
+        console.log(`${title}.mp3 has been deleted`);
       }, 5 * 60 * 1000);
     };
 
