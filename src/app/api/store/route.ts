@@ -8,9 +8,13 @@ interface PostRequestBody {
   title: string | null;
 }
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
-    const { url, title }: PostRequestBody = await req.json();
+    const requestUrl = new URL(req.url);
+    const params = requestUrl.searchParams;
+
+    const url = params.get("url");
+    const title = params.get("title");
 
     const heads = headers();
 
